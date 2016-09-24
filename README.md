@@ -14,3 +14,11 @@ The tasks we need to deliver during the time period can be done in this followin
 Task 1: We will first target towards making a server-side application to recieve and process data from our hardware module over python and its BLE libraries.  
 Task 2: Make a client-side application to display the data and mock some features which we plan to do with this device.  
 Task 3: Check if we need some mobile application for our interface and if time permits, we can work on it.
+
+## Running the project
+
+  - `gulp serve` and then go to `localhost:3000`
+
+## References
+  
+  - For more info: [Angular generator fullstack](https://github.com/angular-fullstack/generator-angular-fullstack) and [Yeoman](http://yeoman.io/learning/index.html)
