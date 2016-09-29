@@ -1,67 +1,11 @@
 {
-  "generator-angular-fullstack": {
-    "generatorVersion": "4.0.5",
-    "endpointDirectory": "server/api/",
-    "insertRoutes": true,
-    "registerRoutesFile": "server/routes.js",
-    "routesNeedle": "// Insert routes below",
-    "routesBase": "/api/",
-    "pluralizeRoutes": true,
-    "insertSockets": true,
-    "registerSocketsFile": "server/config/socketio.js",
-    "socketsNeedle": "// Insert sockets below",
-    "insertModels": true,
-    "registerModelsFile": "server/sqldb/index.js",
-    "modelsNeedle": "// Insert models below",
-    "filters": {
-      "js": true,
-      "babel": true,
-      "flow": true,
-      "html": true,
-      "css": true,
-      "uirouter": true,
-      "bootstrap": false,
-      "uibootstrap": false,
-      "models": true,
-      "mongooseModels": true,
-      "mongoose": true,
-      "jasmine": true,
-      "mocha": false,
-      "should": false,
-      "expect": false
-    }
-  },
-  "generator-ng-component": {
-    "routeDirectory": "client/app/",
-    "directiveDirectory": "client/app/",
-    "componentDirectory": "client/app/components/",
-    "filterDirectory": "client/app/",
-    "serviceDirectory": "client/app/",
-    "basePath": "client",
-    "moduleName": "",
-    "modulePrompt": true,
-    "filters": [
-      "uirouter",
-      "jasmine",
-      "uirouter",
-      "es6",
-      "webpack"
-    ],
-    "extensions": [
-      "babel",
-      "js",
-      "html",
-      "css"
-    ],
-    "directiveSimpleTemplates": "",
-    "directiveComplexTemplates": "",
-    "filterTemplates": "",
-    "serviceTemplates": "",
-    "factoryTemplates": "",
-    "controllerTemplates": "",
-    "componentTemplates": "",
-    "decoratorTemplates": "",
-    "providerTemplates": "",
-    "routeTemplates": ""
+  "generator-karma": {
+    "base-path": "../",
+    "frameworks": "jasmine",
+    "browsers": "PhantomJS",
+    "app-files": "app/scripts/**/*.js",
+    "files-comments": "bower:js,endbower",
+    "bower-components-path": "bower_components",
+    "test-files": "test/mock/**/*.js,test/spec/**/*.js"
   }
 }
