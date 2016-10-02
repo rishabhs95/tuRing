@@ -2,7 +2,6 @@ console.log("ble ecg interfacing");
 
 // CONSTANTS
 var noble = require('noble');
-const fs = require('fs');
 var ARRAY_SIZE = 1000;
 var buffer_x = 1000;
 var buffer_y = 1000;
