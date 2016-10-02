@@ -1,7 +1,28 @@
 <div class="row marketing">
-  <h1>embed graph here</h1>
+  <h1>Health Tracker</h1>
+  <div id="plot" style="width: 0px; height: 400px;"><!-- Plotly chart will be drawn inside this DIV --></div>
 </div>
 
 <div class="row marketing">
   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas molestias incidunt numquam non, illo tenetur! Illum, ratione quibusdam earum libero quisquam incidunt a laboriosam magnam. Soluta quibusdam ipsum eligendi iusto!
 </div>
+
+<script type="text/javascript">
+
+	// Plot.ly
+
+	var trace1 = {
+	  x: [1, 2, 3, 4], 
+	  y: [10, 15, 13, 17],
+	  name: 'heartrate',
+	  type: 'scatter'
+	};
+	var trace2 = {
+	  x: [1, 2, 3, 4], 
+	  y: [16, 5, 11, 9],
+	  name: 'oxy-something', 
+	  type: 'scatter'
+	};
+	var data = [trace1, trace2];
+	Plotly.newPlot('plot', data);
+</script>
