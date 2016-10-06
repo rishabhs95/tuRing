@@ -28,6 +28,9 @@ angular.module('webSummitApp')
         $scope.points_x.push(point.value_x);
         $scope.points_y.shift();
         $scope.points_y.push(point.value_y);
+
+        // Plotly.redraw('plot', data);
+        // check if redraw re-renders everytime scope is modified
       });
     });
   }]);
