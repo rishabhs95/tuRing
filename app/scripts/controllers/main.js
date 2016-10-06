@@ -8,21 +8,26 @@
  * Controller of the webSummitApp
  */
 angular.module('webSummitApp')
-  .controller('MainCtrl', function () {
-	// Plot.ly
+  .controller('MainCtrl', ['$scope', 'mySocket', function ($scope, mySocket) {
+    $scope.points_x = [1, 2, 3, 4];
+    $scope.points_y = [10, 15, 13, 17];
 
-	var trace1 = {
-	  x: [1, 2, 3, 4], 
-	  y: [10, 15, 13, 17],
-	  name: 'heartrate',
-	  type: 'scatter'
-	};
-	var trace2 = {
-	  x: [1, 2, 3, 4], 
-	  y: [16, 5, 11, 9],
-	  name: 'oxy-something', 
-	  type: 'scatter'
-	};
-	var data = [trace1, trace2];
-	Plotly.newPlot('plot', data);
-  });
+    var trace1 = {
+      x: $scope.points_x,
+      y: $scope.points_y,
+      name: 'heartrate',
+      type: 'scatter'
+    };
+
+    var data = [trace1];
+    Plotly.newPlot('plot', data);
+
+    mySocket.on('pointData', function(point) {
+      $scope.$apply(function() {
+        $scope.points_x.shift();
+        $scope.points_x.push(point.value_x);
+        $scope.points_y.shift();
+        $scope.points_y.push(point.value_y);
+      });
+    });
+  }]);

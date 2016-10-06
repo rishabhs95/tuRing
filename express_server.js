@@ -1,36 +1,28 @@
 // SET UP ========================
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 1234;
 
 // NODE BLE CONFIGURATION
 var noble = require('noble');
-var ARRAY_SIZE = 1000;
-var buffer_x = 1000;
-var buffer_y = 1000;
-var min_width = 60;
-var MIN_NUM_VALUES_TO_PLOT = 100;
-var counter = -1;
-var lead1data = [];
-var lead2data = [];
-var ws;
-var ECG_DATA_PORT = 8097;
-var connected = false;
 
 // INCLUDE DEPENDENCIES ========================
 var express = require('express');
 var app = express();
-// var mongoose = require('mongoose');
-var morgan = require('morgan');
-// var bodyParser = require('body-parser');
-// var methodOverride = require('method-override');
+var server   = require('http').Server(app);
+var io       = require('socket.io')(server);
 
-// CONFIGURATION =================
-// mongoose.connect('mongodb://localhost/ble');
+app.use(express.static(__dirname + '/public'));
 
-// app.use(express.static(__dirname + '/public'));
-app.use(morgan('dev')); // log every request to the console
-// app.use(bodyParser.urlencoded({ 'extended': 'true' }));
-// app.use(bodyParser.json());
-// app.use(methodOverride());
+// SOCKET SERVER CONNECTION
+io.on('connection', function(socket){
+
+    socket.emit('connection', "Connection created.")
+    console.log("Socket.io is GO");
+
+    socket.on('notification', function(data) {
+        console.log("NEW POINT IN THE QUEUE", data);
+    });
+
+});
 
 // CONNECT BLE INTERFACE ===============================
 // start scanning after connection is established
@@ -56,32 +48,7 @@ noble.on('discover', function(peripheral) {
     } else {
         noble.stopScanning();
     }
-    /*
-    	MOVE PERIPHERAL EXPLORE TO /API/GET
-    	explore(peripheral);
-    */
-});
-
-
-// ROUTES FOR OUR API
-// =============================================================================
-var router = express.Router(); // get an instance of the express Router
-
-// middleware to use for all requests
-router.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header('Access-Control-Allow-Methods', 'OPTIONS,GET');
-    res.header("Access-Control-Allow-Headers", "Content-Type, Accept, X-Access-Token, X-Key");
-
-    if (req.method == 'OPTIONS') {
-        return res.sendStatus(200);
-    }
-    next(); // make sure we go to the next routes and don't stop here
-});
-
-// GET data from socket connection
-router.get('/recieve', function(req, res) {
-	explore(peripheral);
+    explore(peripheral);
 });
 
 // FUNCTION TO CALCULATE AND RETURN DATA FROM CONNECTED BLE DEVICE
@@ -107,18 +74,13 @@ function explore(peripheral) {
                     x = data[0] * 65536 + data[1] * 256 + data[2];
                     y = data[3] * 65536 + data[4] * 256 + data[5];
                     // EMIT `x` and `y` using node socket server
+                    socket.emit('pointData', { value_x: x, value_y: y });
                     // LISTEN to emitted data on ANGULAR application 
                 });
             });
         });
     });
 }
-
-
-
-// REGISTER OUR ROUTES ================================
-// all of our routes will be prefixed with /api
-app.use('/ble_api', router);
 
 // listen (start app with node server.js) ======================================
 app.listen(1234);

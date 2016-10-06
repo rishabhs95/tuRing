@@ -15,8 +15,18 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'btford.socket-io'
   ])
+  .factory('mySocket', function(socketFactory) {
+    var nodeConnection = io.connect('http://localhost:1234/');
+
+    var nodeSocket = socketFactory({
+      ioSocket: nodeConnection
+    });
+
+    return nodeSocket;
+  });
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
