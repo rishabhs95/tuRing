@@ -10,11 +10,12 @@
 angular.module('webSummitApp')
   .controller('MainCtrl', ['$scope', 'mySocket', function ($scope, mySocket) {
     $scope.points_x = new Array(100);
-    $scope.points_y = new Array(100).fill(5);
+    $scope.points_y = new Array(100);
 
     // fix values of x, as in a live graph only the value of y will be enqueued
     for (var i=0; i<100; i++) {
       $scope.points_x[i] = i;
+      $scope.points_y[i] = i + 1;
     }
 
     var trace1 = {
@@ -24,8 +25,12 @@ angular.module('webSummitApp')
       type: 'scatter'
     };
 
+    var layout = {
+      title:'You\'re good!'
+    };
+
     var data = [trace1];
-    Plotly.newPlot('plot', data);
+    Plotly.newPlot('plot', data, layout);
 
     mySocket.on('pointData', function(point) {
       $scope.$apply(function() {
