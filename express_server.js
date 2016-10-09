@@ -12,6 +12,15 @@ var io       = require('socket.io')(server);
 
 app.use(express.static(__dirname + '/public'));
 
+// MIDDLEWARE: set cross origin sharing headers
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
+    res.header("Access-Control-Allow-Credentials", "true");
+    next();
+});
+
 // SOCKET SERVER CONNECTION
 io.on('connection', function(socket){
 
