@@ -19,7 +19,7 @@ angular
     'btford.socket-io'
   ])
   .factory('mySocket', function(socketFactory) {
-    var nodeConnection = io.connect('http://localhost:9000/');
+    var nodeConnection = io.connect('http://localhost:1234/');
 
     var nodeSocket = socketFactory({
       ioSocket: nodeConnection
