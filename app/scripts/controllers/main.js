@@ -12,7 +12,7 @@ angular.module('webSummitApp')
     $scope.points_x = new Array(100);
     $scope.points_y = new Array(100);
 
-    // fix values of x, as in a live graph only the value of y will be enqueued
+    // fixed values of x, as in a live graph only the value of y will be enqueued
     for (var i=0; i<100; i++) {
       $scope.points_x[i] = i;
       $scope.points_y[i] = i + 1;
@@ -32,10 +32,17 @@ angular.module('webSummitApp')
     var data = [trace1];
     Plotly.newPlot('plot', data, layout);
 
+    mySocket.on('connect',function() {
+      console.log('Client has connected to the server!');
+    });
+
+    mySocket.on('disconnect',function() {
+      console.log('The client has disconnected!');
+    });
+
     mySocket.on('pointData', function(point) {
+      console.log('New Point pushed!');
       $scope.$apply(function() {
-        // $scope.points_x.shift();
-        // $scope.points_x.push(point.value_x);
         $scope.points_y.shift();
         $scope.points_y.push(point.value_y);
 

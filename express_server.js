@@ -23,14 +23,8 @@ app.use(function(req, res, next) {
 
 // SOCKET SERVER CONNECTION
 io.on('connection', function(socket){
-
+  console.log("Socket.io is GO. Connected to client.");
     socket.emit('connection', "Connection created.")
-    console.log("Socket.io is GO");
-
-    socket.on('notification', function(data) {
-        console.log("NEW POINT IN THE QUEUE", data);
-    });
-
 });
 
 // CONNECT BLE INTERFACE ===============================
@@ -83,6 +77,7 @@ function explore(peripheral) {
                     x = data[0] * 65536 + data[1] * 256 + data[2];
                     y = data[3] * 65536 + data[4] * 256 + data[5];
                     // EMIT `x` and `y` using node socket server
+                    console.log('New point on graph sent to client!');
                     socket.emit('pointData', { value_x: x, value_y: y });
                     // LISTEN to emitted data on ANGULAR application 
                 });
@@ -92,5 +87,5 @@ function explore(peripheral) {
 }
 
 // listen (start app with node server.js) ======================================
-app.listen(1234);
+server.listen(1234);
 console.log("App listening on port 1234");
