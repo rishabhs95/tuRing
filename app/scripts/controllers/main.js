@@ -32,22 +32,10 @@ angular.module('webSummitApp')
     var data = [trace1];
     Plotly.newPlot('plot', data, layout);
 
-    mySocket.on('connect',function() {
-      console.log('Client has connected to the server!');
-    });
-
-    mySocket.on('disconnect',function() {
-      console.log('The client has disconnected!');
-    });
-
-    mySocket.on('pointData', function(point) {
-      console.log('New Point pushed!');
-      $scope.$apply(function() {
-        $scope.points_y.shift();
-        $scope.points_y.push(point.value_y);
-
-        // Plotly.redraw('plot', data);
-        // check if redraw re-renders everytime scope is modified
-      });
-    });
+    for (var i=0; i<20; i++) {
+      console.log($scope.points_x, $scope.points_y);
+      $scope.points_y.shift();
+      $scope.points_y.push(50);
+      Plotly.newPlot('plot', data, layout);
+    }
   }]);
