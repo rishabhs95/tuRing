@@ -24,7 +24,7 @@ app.use(function(req, res, next) {
 // SOCKET SERVER CONNECTION
 io.on('connection', function(socket){
   console.log("Socket.io is GO. Connected to client.");
-    socket.emit('connection', "Connection created.")
+    socket.emit('connect', "Connection created.")
 });
 
 // CONNECT BLE INTERFACE ===============================
