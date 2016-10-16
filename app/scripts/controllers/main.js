@@ -8,18 +8,7 @@
  * Controller of the webSummitApp
  */
 
-angular.module('webSummitApp', ['chart.js'])
-       .config(['ChartJsProvider', function (ChartJsProvider) {
-          // Configure all charts
-          ChartJsProvider.setOptions({
-            chartColors: ['#FF5252', '#FF8A80'],
-            responsive: false
-          });
-          // Configure all line charts
-          ChartJsProvider.setOptions('line', {
-            showLines: false
-          });
-        }])
+angular.module('webSummitApp')
        .controller('MainCtrl', ['$scope', '$timeout', function ($scope, $timeout) {
         console.log("hello");
         $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
