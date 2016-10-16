@@ -1,7 +1,13 @@
 <div class="row marketing">
   <h1>Health Tracker</h1>
-  <div id="plot" style="width: 0px; height: 400px;"><!-- Plotly chart will be drawn inside this DIV --></div>
+  <canvas class="chart chart-line" chart-data="data" chart-labels="labels" 
+    chart-series="series" chart-click="onClick"></canvas>
 </div>
+
+<canvas id="base" class="chart-bar"
+  chart-data="data" chart-labels="labels" chart-colors="colors"
+  chart-dataset-override="datasetOverride" >
+</canvas>
 
 <div class="row marketing">
   Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas molestias incidunt numquam non, illo tenetur! Illum, ratione quibusdam earum libero quisquam incidunt a laboriosam magnam. Soluta quibusdam ipsum eligendi iusto!
