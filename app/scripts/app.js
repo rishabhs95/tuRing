@@ -16,7 +16,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'btford.socket-io'
+    'btford.socket-io',
+    'chart.js'
   ])
   .factory('mySocket', function(socketFactory) {
     var nodeConnection = io.connect('http://localhost:1234/');
@@ -27,6 +28,14 @@ angular
 
     return nodeSocket;
   })
+  .config(['ChartJsProvider', function (ChartJsProvider) {
+    ChartJsProvider.setOptions({
+      responsive: true
+    });
+    ChartJsProvider.setOptions('line', {
+      showLines: true
+    });
+  }])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {

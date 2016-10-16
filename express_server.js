@@ -10,7 +10,10 @@ var app = express();
 var server   = require('http').Server(app);
 var io       = require('socket.io')(server);
 
-app.use(express.static(__dirname + '/public'));
+var connectedSockets = 0;
+var sockets = {};
+
+app.use("/node_modules", express.static(__dirname + '/node_modules'));
 
 // MIDDLEWARE: set cross origin sharing headers
 app.use(function(req, res, next) {
@@ -23,8 +26,15 @@ app.use(function(req, res, next) {
 
 // SOCKET SERVER CONNECTION
 io.on('connection', function(socket){
-  console.log("Socket.io is GO. Connected to client.");
-    socket.emit('connect', "Connection created.")
+  socket.emit('connect', "Connection created.")
+  if (!sockets[socket.id]) connectedSockets++;
+  sockets[socket.id]={ id: socket.id };
+  console.log('Client Connected: ' + socket.id + '; Total Socket Count: ' + connectedSockets);
+  socket.on('disconnect', function (data) {
+    delete sockets[socket.id];
+    connectedSockets--;
+    console.log('Client Disconnected: ' + socket.id + '; Total Socket Count: ' + connectedSockets );
+  });
 });
 
 // CONNECT BLE INTERFACE ===============================
@@ -87,5 +97,10 @@ function explore(peripheral) {
 }
 
 // listen (start app with node server.js) ======================================
-server.listen(1234);
-console.log("App listening on port 1234");
+server.listen(1234, function() {
+  console.log('Server listening at port ', port);
+
+  setInterval(function(){
+    console.log(connectedSockets + ' Online Devices At ' + Date());
+  }, 1000 * 60 * 1);
+});

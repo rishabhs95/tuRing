@@ -37,6 +37,7 @@
     "test": "karma start test/karma.conf.js"
   },
   "dependencies": {
+    "angular-chart.js": "^1.0.3",
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "method-override": "^2.3.6",
