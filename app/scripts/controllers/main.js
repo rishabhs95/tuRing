@@ -8,13 +8,14 @@
  * Controller of the webSummitApp
  */
 angular.module('webSummitApp')
-  .controller('MainCtrl', ['$scope', 'mySocket', function ($scope, mySocket) {
+  .controller('MainCtrl', ['$scope', '$timeout', 'mySocket', function ($scope, $timeout, mySocket) {
     $scope.points_x = new Array(10);
     $scope.points_y = new Array(100);
     for (var i=0; i<100; i++) {
       $scope.points_x[i] = i;
       $scope.points_y[i] = Math.random()*100;
     }
+
     $scope.labels = $scope.points_x;
     $scope.series = ['Heart Rate'];
     $scope.data = [$scope.points_y];
@@ -29,7 +30,13 @@ angular.module('webSummitApp')
 
     mySocket.on('pointData', function(point) {
       console.log('New Point pushed!');
+      // TODO: Someday
+      /*$timeout(function () {
+          $scope.points_y.shift();
+          $scope.points_y.push(point.value_y);
+          $scope.data = [$scope.points_y];
+      }, 2000);*/
       $scope.points_y.shift();
       $scope.points_y.push(point.value_y);
     });
-  }]);
+}]);
