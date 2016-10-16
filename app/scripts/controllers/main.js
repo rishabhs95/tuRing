@@ -8,23 +8,28 @@
  * Controller of the webSummitApp
  */
 angular.module('webSummitApp')
-  .controller('MainCtrl', ['$scope', '$timeout', 'mySocket', function ($scope, $timeout, mySocket) {
-    console.log("hello");
-    $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-    $scope.series = ['Series A', 'Series B'];
-    $scope.data = [
-      [65, 59, 80, 81, 56, 55, 40],
-      [28, 48, 40, 19, 86, 27, 90]
-    ];
-    $scope.onClick = function (points, evt) {
-      console.log(points, evt);
-    };
+  .controller('MainCtrl', ['$scope', 'mySocket', function ($scope, mySocket) {
+    $scope.points_x = new Array(10);
+    $scope.points_y = new Array(100);
+    for (var i=0; i<100; i++) {
+      $scope.points_x[i] = i;
+      $scope.points_y[i] = Math.random()*100;
+    }
+    $scope.labels = $scope.points_x;
+    $scope.series = ['Heart Rate'];
+    $scope.data = [$scope.points_y];
 
-    // Simulate async data update
-    $timeout(function () {
-      $scope.data = [
-        [28, 48, 40, 19, 86, 27, 90],
-        [65, 59, 80, 81, 56, 55, 40]
-      ];
-    }, 3000);
+    mySocket.on('connect',function() {
+      console.log('Client has connected to the server!');
+    });
+
+    mySocket.on('disconnect',function() {
+      console.log('The client has disconnected!');
+    });
+
+    mySocket.on('pointData', function(point) {
+      console.log('New Point pushed!');
+      $scope.points_y.shift();
+      $scope.points_y.push(point.value_y);
+    });
   }]);

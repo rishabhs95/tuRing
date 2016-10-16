@@ -30,11 +30,10 @@ angular
   })
   .config(['ChartJsProvider', function (ChartJsProvider) {
     ChartJsProvider.setOptions({
-      chartColors: ['#FF5252', '#FF8A80'],
-      responsive: false
+      responsive: true
     });
     ChartJsProvider.setOptions('line', {
-      showLines: false
+      showLines: true
     });
   }])
   .config(function ($routeProvider) {
