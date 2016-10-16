@@ -29,6 +29,12 @@ angular.module('webSummitApp')
 
     mySocket.on('pointData', function(point) {
       console.log('New Point pushed!');
+      // TODO: Someday
+      /*$timeout(function () {
+          $scope.points_y.shift();
+          $scope.points_y.push(point.value_y);
+          $scope.data = [$scope.points_y];
+      }, 2000);*/
       $scope.points_y.shift();
       $scope.points_y.push(point.value_y);
     });
