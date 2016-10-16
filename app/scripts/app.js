@@ -34,7 +34,7 @@ angular
       responsive: false
     });
     ChartJsProvider.setOptions('line', {
-      showLines: false
+      showLines: true
     });
   }])
   .config(function ($routeProvider) {
